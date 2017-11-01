@@ -9,6 +9,8 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { BLE } from '@ionic-native/ble';
+
 import { Pro } from '@ionic/pro';
 
 const IonicPro = Pro.init('7a92ab8e', {
@@ -40,6 +42,7 @@ export class MyErrorHandler implements ErrorHandler {
   providers: [
     StatusBar,
     SplashScreen,
+    BLE,
     {provide: ErrorHandler, useClass: MyErrorHandler}
   ]
 })

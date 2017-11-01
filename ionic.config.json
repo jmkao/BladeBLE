@@ -2,5 +2,7 @@
   "name": "bladeble",
   "app_id": "7a92ab8e",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
