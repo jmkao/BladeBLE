@@ -5,6 +5,9 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { BleModalPage } from '../pages/ble-modal/ble-modal';
+
+import { BleService } from '../services/ble-service';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,7 +30,8 @@ export class MyErrorHandler implements ErrorHandler {
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    BleModalPage
   ],
   imports: [
     BrowserModule,
@@ -37,12 +41,14 @@ export class MyErrorHandler implements ErrorHandler {
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    BleModalPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     BLE,
+    BleService,
     {provide: ErrorHandler, useClass: MyErrorHandler}
   ]
 })
