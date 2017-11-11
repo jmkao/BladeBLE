@@ -51,7 +51,7 @@ export class BleComponent {
 
     this.platform.ready().then(() => {
       console.log(this.platform.platforms());
-      Pro.getApp().monitoring.log("App launched on: "+this.platform.platforms());
+      Pro.getApp().monitoring.log("App launched on: "+this.platform.platforms(), { level: 'info' });
       if (this.platform.is("cordova")) {
         // Only init on cordova platforms
         Pro.getApp().monitoring.call(() => {
