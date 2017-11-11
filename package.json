@@ -27,6 +27,7 @@
     "@ionic/pro": "^1.0.11",
     "@ionic/storage": "2.0.1",
     "cordova-plugin-ble-central": "^1.1.4",
+    "cordova-plugin-ionic": "^2.0.3",
     "ionic-angular": "3.8.0",
     "ionicons": "3.0.0",
     "rxjs": "5.4.3",
@@ -40,7 +41,12 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-ble-central": {}
+      "cordova-plugin-ble-central": {},
+      "cordova-plugin-ionic": {
+        "APP_ID": "7a92ab8e",
+        "CHANNEL_NAME": "Master",
+        "UPDATE_METHOD": "background"
+      }
     }
   }
 }
