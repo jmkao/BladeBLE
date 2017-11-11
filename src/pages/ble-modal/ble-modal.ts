@@ -22,10 +22,11 @@ export class BleModalPage {
   subscription: Subscription;
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public bleService:BleService) {
-    this.bleStatus = bleService.bleStatus;
+    this.bleStatus = bleService.status;
     this.subscription = bleService.bleStatusUpdate$.subscribe(
       bleStatus => {
         this.bleStatus = bleStatus;
+        console.log("BleModal: Status changed to: "+this.bleStatus);
       }
     )
   }
@@ -34,12 +35,9 @@ export class BleModalPage {
     this.viewCtrl.dismiss();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BleModalPage');
-  }
-
   ngOnDestroy() {
     // prevent memory leak when component destroyed
+    console.log("BleModal Destroyed");
     this.subscription.unsubscribe();
   }
 

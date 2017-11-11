@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
+import { BleComponent } from './ble/ble';
 
 @NgModule({
-	declarations: [],
+	declarations: [BleComponent],
 	imports: [],
-	exports: []
+	exports: [BleComponent]
 })
 export class ComponentsModule {}

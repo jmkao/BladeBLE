@@ -1,26 +1,30 @@
-<ion-header>
-  <ion-navbar>
+<ion-header ion-grid>
+  <ion-toolbar ion-row>
     <!--
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
   -->
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+    <ble #ble></ble>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content no-padding class="no-scroll">
   <ion-slides pager>
     <ion-slide ion-grid>
       <ion-buttons padding-bottom ion-row>
-        <button ion-button ion-col color="red" (click)="openBLEModal()">Red</button>
-        <button ion-button ion-col color="green">Green</button>
-        <button ion-button ion-col color="blue">Blue</button>
+          <button ion-button ion-col color="dark" (click)="ble.updateReset()">Reset</button>
+          <button ion-button ion-col color="light" (click)="ble.updateOff()">Off</button>
+        </ion-buttons>    
+      <ion-buttons padding-bottom ion-row>
+        <button ion-button ion-col color="red" (click)="ble.updateHS(0,255)" >Red</button>
+        <button ion-button ion-col color="green" (click)="ble.updateHS(120,255)">Green</button>
+        <button ion-button ion-col color="blue" (click)="ble.updateHS(240,255)">Blue</button>
       </ion-buttons>
       <ion-buttons ion-row>
-        <button ion-button ion-col color="cyan">Cyan</button>
-        <button ion-button ion-col color="magenta">Magenta</button>
-        <button ion-button ion-col color="yellow">Yellow</button>
+        <button ion-button ion-col color="cyan" (click)="ble.updateHS(180,255)">Cyan</button>
+        <button ion-button ion-col color="magenta" (click)="ble.updateHS(300,255)">Magenta</button>
+        <button ion-button ion-col color="yellow" (click)="ble.updateHS(60,255)">Yellow</button>
       </ion-buttons>
     </ion-slide>
   </ion-slides>

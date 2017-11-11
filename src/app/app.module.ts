@@ -9,6 +9,8 @@ import { BleModalPage } from '../pages/ble-modal/ble-modal';
 
 import { BleService } from '../services/ble-service';
 
+import { ComponentsModule } from "../components/components.module";
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -35,6 +37,7 @@ export class MyErrorHandler implements ErrorHandler {
   ],
   imports: [
     BrowserModule,
+    ComponentsModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
