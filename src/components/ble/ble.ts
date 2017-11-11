@@ -49,7 +49,9 @@ export class BleComponent {
       }
     )
 
-    this.bleService.init();
+    setTimeout(() => {
+      this.bleService.init();      
+    }, 1000);
   }
 
   public updateOff() {
