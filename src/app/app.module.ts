@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { IonicApp, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
@@ -38,6 +39,7 @@ export class MyErrorHandler implements ErrorHandler {
   imports: [
     BrowserModule,
     ComponentsModule,
+    CommonModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],

@@ -23,7 +23,7 @@ export class BleModalPage {
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams, public bleService:BleService) {
     this.bleStatus = bleService.status;
-    this.subscription = bleService.bleStatusUpdate$.subscribe(
+    this.subscription = bleService.bleStatusSource.asObservable().subscribe(
       bleStatus => {
         this.bleStatus = bleStatus;
         console.log("BleModal: Status changed to: "+this.bleStatus);

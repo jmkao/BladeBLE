@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { BleService } from '../../services/ble-service';
 import { BleModalPage } from '../../pages/ble-modal/ble-modal';
 
+import { AsyncPipe } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
+
 const DEFAULT_BRIGHTNESS = 64;
 const MIN_UPDATE_INTERVAL_MS = 20;
 
@@ -23,6 +26,7 @@ export class BleComponent {
 
   status:string;
   bleSubscription: Subscription;
+  bleObservable: Observable<string>;
   bleModal:Modal = null;
 
   private lastUpdateMs:number = 0;
@@ -38,7 +42,8 @@ export class BleComponent {
 
   constructor(public bleService: BleService, public modalCtrl: ModalController) {
     this.status = bleService.status;
-    this.bleSubscription = bleService.bleStatusUpdate$.subscribe(
+    this.bleObservable = bleService.bleStatusSource.asObservable();
+    this.bleSubscription = bleService.bleStatusSource.asObservable().subscribe(
       newStatus => {
         this.changeStatus(newStatus);
       }

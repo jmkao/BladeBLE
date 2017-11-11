@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject }    from 'rxjs/Subject';
+import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 
 import { BLE } from '@ionic-native/ble';
 
@@ -10,13 +10,13 @@ const SERVICE_UUID =  "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 @Injectable()
 export class BleService {
 
-  status: string;
-  private bleStatusSource = new Subject<string>();
+  status: string = "Pre-init";
+  bleStatusSource = new BehaviorSubject<string>(this.status);
 
   private connectedDeviceIds:Array<string> = [];
   private device = null;
 
-  bleStatusUpdate$ = this.bleStatusSource.asObservable();
+  //bleStatusUpdate$ = this.bleStatusSource.asObservable();
 
   constructor(private ble:BLE) {
     this.updateBleStatus("Pre-init");
