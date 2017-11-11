@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { ModalController, Modal } from 'ionic-angular';
+import { Platform, ModalController, Modal } from 'ionic-angular';
+
+import { Pro } from '@ionic/pro';
 
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 import { BleService } from '../../services/ble-service';
 import { BleModalPage } from '../../pages/ble-modal/ble-modal';
-
-import { AsyncPipe } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
 
 const DEFAULT_BRIGHTNESS = 64;
 const MIN_UPDATE_INTERVAL_MS = 20;
@@ -40,7 +40,7 @@ export class BleComponent {
   private off:boolean = true;
   private cycle:boolean = false;
 
-  constructor(public bleService: BleService, public modalCtrl: ModalController) {
+  constructor(public bleService: BleService, public modalCtrl: ModalController, public platform:Platform) {
     this.status = bleService.status;
     this.bleObservable = bleService.bleStatusSource.asObservable();
     this.bleSubscription = bleService.bleStatusSource.asObservable().subscribe(
@@ -49,12 +49,19 @@ export class BleComponent {
       }
     )
 
-    setTimeout(() => {
-      this.bleService.init();      
-    }, 1000);
+    this.platform.ready().then(() => {
+      console.log(this.platform.platforms());
+      Pro.getApp().monitoring.log("App launched on: "+this.platform.platforms());
+      if (this.platform.is("cordova")) {
+        // Only init on cordova platforms
+        Pro.getApp().monitoring.call(() => {
+          this.bleService.init();
+        });
+      }
+    });
   }
 
-  public updateOff() {
+    public updateOff() {
     console.log("BleComponent updateOff()");
     this.cycle = false;
     this.off = true;
