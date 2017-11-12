@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 
+import { Pro } from '@ionic/pro';
 import { BLE } from '@ionic-native/ble';
 
 const DEVICE_NAME = "RFGLOW";
@@ -86,7 +87,14 @@ export class BleService {
 
 
   public writeHSV(h:number, s:number, v:number) {
-    //TODO BLE connection check here
+    if (this.device == null && this.status == "Connected") {
+      console.log("BleService: device is null even though state is connected. This should never happen!");
+      Pro.getApp().monitoring.log("BleService: device is null even though state is connected. This should never happen!");
+      this.init();
+    } else if (this.status != "Connected") {
+      console.log("BleService: writeHSV() called while not connected. Initting.");
+      this.init();
+    }
 
     let payload = new Uint8Array(4);
     payload[0] = (h >> 8) & 0x00FF;
@@ -97,7 +105,13 @@ export class BleService {
     console.log("Calling device with payload: "+payload[0]+", "+payload[1]+", "
       +payload[2]+", "+payload[3]);
 
-    // TODO BLE writeCharacteristic stuff here
+    this.ble.write(this.device.id, SERVICE_UUID, TX_UUID, payload.buffer).then(
+      () => console.log('BleService: Write successful'),
+      () => {
+        console.log('BleService: Error writing to device - resetting.');
+        this.init();
+      }
+    );
   }
 
   private updateBleStatus(newStatus: string) {

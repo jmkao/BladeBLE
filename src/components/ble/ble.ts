@@ -10,7 +10,7 @@ import { BleService } from '../../services/ble-service';
 import { BleModalPage } from '../../pages/ble-modal/ble-modal';
 
 const DEFAULT_BRIGHTNESS = 64;
-const MIN_UPDATE_INTERVAL_MS = 20;
+const MIN_UPDATE_INTERVAL_MS = 60;
 
 /**
  * BleComponent
@@ -33,7 +33,7 @@ export class BleComponent {
 
   private h:number = 0;
   private s:number = 255;
-  private v:number = DEFAULT_BRIGHTNESS;
+  v:number = DEFAULT_BRIGHTNESS;
   private pH:number = 0;
   private pS:number = 255;
   private pV:number = DEFAULT_BRIGHTNESS;
@@ -97,17 +97,17 @@ export class BleComponent {
     this.sendUpdate();
   }
 
-  public cycleHS(hsArray:Array<number>, delayMs:number) {
+  public cycleHS(hsArray:number[][], delayMs:number) {
     this.cycle = true;
     console.log("Cycle on");
 
     var counter = 0;
-    var looper = function() {
-      if (this.cycle) {
+    var looper = () => {
+      if (this.cycle == true) {
         var index = counter%hsArray.length;
         counter++;
         this.updateHS(hsArray[index][0], hsArray[index][1]);
-        this.state.cycle = true;
+        this.cycle = true;
         console.log("Cycle loop")
 
         setTimeout(looper, delayMs);
