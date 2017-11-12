@@ -119,7 +119,7 @@ export class BleComponent {
     looper();
   }
 
-  private sendUpdate() {
+  public sendUpdate() {
     let curMs = new Date().getTime();
     console.log("sendUpdate() requested at "+curMs);    
     if (curMs - this.lastUpdateMs > MIN_UPDATE_INTERVAL_MS) {

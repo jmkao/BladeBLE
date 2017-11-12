@@ -26,6 +26,9 @@
                 <button ion-button ion-col color="magenta" (click)="ble.updateHS(300,255)">Magenta</button>
                 <button ion-button ion-col color="yellow" (click)="ble.updateHS(60,255)">Yellow</button>
             </ion-buttons>
+            <ion-range [(ngModel)]="ble.v" (ngModelChange)="ble.sendUpdate()" min="0" max="255" ion-row>
+                <ion-icon range-left small name="sunny"></ion-icon>
+            </ion-range>
         </ion-slide>
         <ion-slide ion-grid>
             <ion-buttons padding-bottom ion-row>
