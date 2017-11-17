@@ -20,7 +20,7 @@ import { BLE } from '@ionic-native/ble';
 import { Pro } from '@ionic/pro';
 
 const IonicPro = Pro.init('7a92ab8e', {
-  appVersion: "0.0.2"
+  appVersion: "0.0.3"
 });
 
 export class MyErrorHandler implements ErrorHandler {
