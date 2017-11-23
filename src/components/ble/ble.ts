@@ -10,6 +10,7 @@ import { BleService } from '../../services/ble-service';
 import { BleModalPage } from '../../pages/ble-modal/ble-modal';
 
 const DEFAULT_BRIGHTNESS = 64;
+const DEFAULT_DIM_LEVEL = 2;
 const MIN_UPDATE_INTERVAL_MS = 60;
 
 /**
@@ -28,15 +29,18 @@ export class BleComponent {
   bleSubscription: Subscription;
   bleObservable: Observable<string>;
   bleModal:Modal = null;
+  dummyBLE:boolean = true;
 
   private lastUpdateMs:number = 0;
 
   private h:number = 0;
   private s:number = 255;
   v:number = DEFAULT_BRIGHTNESS;
+  private dim = DEFAULT_DIM_LEVEL;
   private pH:number = 0;
   private pS:number = 255;
   private pV:number = DEFAULT_BRIGHTNESS;
+  private pDim = DEFAULT_DIM_LEVEL;
   private off:boolean = true;
   private cycle:boolean = false;
 
@@ -55,8 +59,11 @@ export class BleComponent {
       if (this.platform.is("cordova")) {
         // Only init on cordova platforms
         Pro.getApp().monitoring.call(() => {
-          this.bleService.init();
+          setTimeout(() => {
+            this.bleService.init();            
+          }, 1000);
         });
+        this.dummyBLE = false;
       }
     });
   }
@@ -97,6 +104,11 @@ export class BleComponent {
     this.sendUpdate();
   }
 
+  public updateDim(newDim:number) {
+    this.dim = newDim;
+    this.sendUpdate();
+  }
+
   public cycleHS(hsArray:number[][], delayMs:number) {
     this.cycle = true;
     console.log("Cycle on");
@@ -120,16 +132,20 @@ export class BleComponent {
   }
 
   public sendUpdate() {
+    if (this.dummyBLE) {
+      return;
+    }
     let curMs = new Date().getTime();
     console.log("sendUpdate() requested at "+curMs);    
     if (curMs - this.lastUpdateMs > MIN_UPDATE_INTERVAL_MS) {
       // Only update if MIN_UPDATE_INTERVAL_MS has passed since last update
       if (!this.off) {
         // Only if we're on
-        this.bleService.writeHSV(this.h, this.s, this.v);
+        this.bleService.writeHSV((this.dim*360)+this.h, this.s, this.v);
         this.pH = this.h;
         this.pS = this.s;
         this.pV = this.v;
+        this.pDim = this.dim;
         this.lastUpdateMs = curMs;
       } else {
         // We're off
