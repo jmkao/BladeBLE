@@ -134,6 +134,7 @@ export class BleComponent {
 
   public cycleHS(hsArray:number[][], delayMs:number) {
     this.cycle = true;
+    this.off = false;
     console.log("Cycle on");
 
     let counter = 0;
@@ -160,7 +161,8 @@ export class BleComponent {
 
   public decayV(startHSV:number[], halfLifeMs:number) {
     this.cycle = true;
-
+    this.off = false;
+    
     let startMs = new Date().getTime();
     console.log("Decay started at "+startMs);
 
@@ -187,7 +189,8 @@ export class BleComponent {
 
   public fadeHSV(fromHSV:number[], toHSV:number[], durationMs:number) {
     this.cycle = true;
-
+    this.off = false;
+    
     let startMs = new Date().getTime();
     let dH = toHSV[0] - fromHSV[0];
     let dS = toHSV[1] - fromHSV[1];
