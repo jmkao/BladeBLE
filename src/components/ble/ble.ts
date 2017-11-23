@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { BleService } from '../../services/ble-service';
 import { BleModalPage } from '../../pages/ble-modal/ble-modal';
+import { isDefined } from 'ionic-angular/util/util';
 
 const DEFAULT_BRIGHTNESS = 64;
 const DEFAULT_DIM_LEVEL = 2;
@@ -43,6 +44,7 @@ export class BleComponent {
   private pDim = DEFAULT_DIM_LEVEL;
   private off:boolean = true;
   private cycle:boolean = false;
+  private looperTimeout:number = undefined;
 
   constructor(public bleService: BleService, public modalCtrl: ModalController, public platform:Platform) {
     this.status = bleService.status;
@@ -68,40 +70,61 @@ export class BleComponent {
     });
   }
 
-    public updateOff() {
+  public updateOff() {
     console.log("BleComponent updateOff()");
     this.cycle = false;
     this.off = true;
+    if (isDefined(this.looperTimeout)) {
+      clearTimeout(this.looperTimeout);
+      this.looperTimeout = undefined;
+    }
+    
     this.sendUpdate();
   }
 
   public updateReset() {
     console.log("BleComponent updateReset()")
     this.cycle = false;
-    this.h = 0;
-    this.s = 255;
-    this.v = 64;
     this.off = true;
-    this.sendUpdate();
+    if (isDefined(this.looperTimeout)) {
+      clearTimeout(this.looperTimeout);
+      this.looperTimeout = undefined;
+      setTimeout( () => {
+        this._updateHSV(0, 255, 64);
+      }, MIN_UPDATE_INTERVAL_MS);
+    } else {
+      this._updateHSV(0, 255, 64);      
+    }
   }
 
   public updateHS(h:number, s:number) {
     console.log("BleComponent updateHS()");
     this.cycle = false;
-    this.h = h;
-    this.s = s;
     this.off = false;
-    this.sendUpdate();
+    if (isDefined(this.looperTimeout)) {
+      clearTimeout(this.looperTimeout);
+      this.looperTimeout = undefined;
+      setTimeout( () => {
+        this._updateHSV(h, s, this.v);        
+      }, MIN_UPDATE_INTERVAL_MS);
+    } else {
+      this._updateHSV(h, s, this.v);      
+    }
   }
 
   public updateHSV(h:number, s:number, v:number) {
     console.log("BleComponent updateHSV()");
     this.cycle = false;
-    this.h = h;
-    this.s = s;
-    this.v = v;
     this.off = false;
-    this.sendUpdate();
+    if (isDefined(this.looperTimeout)) {
+      clearTimeout(this.looperTimeout);
+      this.looperTimeout = undefined;
+      setTimeout( () => {
+        this._updateHSV(h, s, v);        
+      }, MIN_UPDATE_INTERVAL_MS);
+    } else {
+      this._updateHSV(h, s, v);      
+    }
   }
 
   public updateDim(newDim:number) {
@@ -113,22 +136,98 @@ export class BleComponent {
     this.cycle = true;
     console.log("Cycle on");
 
-    var counter = 0;
-    var looper = () => {
+    let counter = 0;
+
+    let looper = () => {
       if (this.cycle == true) {
-        var index = counter%hsArray.length;
+        let index = counter%hsArray.length;
         counter++;
-        this.updateHS(hsArray[index][0], hsArray[index][1]);
-        this.cycle = true;
+        this._updateHSV(hsArray[index][0], hsArray[index][1], this.v);
         console.log("Cycle loop")
 
-        setTimeout(looper, delayMs);
+        this.looperTimeout = setTimeout(looper, delayMs);
       } else {
-        this.updateOff();
+        //this.updateOff();
       }
     }
 
+    if (isDefined(this.looperTimeout)) {
+      clearTimeout(this.looperTimeout);
+      this.looperTimeout = undefined;
+    }
     looper();
+  }
+
+  public decayV(startHSV:number[], halfLifeMs:number) {
+    this.cycle = true;
+
+    let startMs = new Date().getTime();
+    console.log("Decay started at "+startMs);
+
+    let looper = () => {
+      if (this.cycle == false) {
+        console.log("Decay terminated");
+        //this.updateOff();
+        return;
+      }
+
+      let curMs = new Date().getTime();
+      let ratio = Math.pow(2, -(curMs - startMs)/halfLifeMs);
+      this._updateHSV(startHSV[0], startHSV[1], startHSV[2]*ratio);
+
+      this.looperTimeout = setTimeout(looper, MIN_UPDATE_INTERVAL_MS);
+    }
+
+    if (isDefined(this.looperTimeout)) {
+      clearTimeout(this.looperTimeout);
+      this.looperTimeout = undefined;
+    }
+    looper();
+  }
+
+  public fadeHSV(fromHSV:number[], toHSV:number[], durationMs:number) {
+    this.cycle = true;
+
+    let startMs = new Date().getTime();
+    let dH = toHSV[0] - fromHSV[0];
+    let dS = toHSV[1] - fromHSV[1];
+    let dV = toHSV[2] - fromHSV[2];
+
+    console.log("Fade started at "+startMs);
+
+    let looper = () => {
+      if (this.cycle == false) {
+        console.log("Fade terminated");
+        //this.updateOff();
+        return;
+      }
+
+      let curMs = new Date().getTime();
+      let ratio = (curMs - startMs) / durationMs;
+      if (ratio > 1) {
+        this.cycle = false;
+        console.log("Fade completed at "+curMs);
+        return;
+      }
+
+      this._updateHSV(fromHSV[0] + ratio*dH, fromHSV[1] + ratio*dS, fromHSV[2] + ratio*dV);
+
+      this.looperTimeout = setTimeout(looper, MIN_UPDATE_INTERVAL_MS);
+    }
+
+    if (isDefined(this.looperTimeout)) {
+      clearTimeout(this.looperTimeout);
+      this.looperTimeout = undefined;
+    }
+    looper();
+  }
+
+  private _updateHSV(h:number, s:number, v:number) {
+    console.log("BleComponent _updateHSV()");
+    this.h = h;
+    this.s = s;
+    this.v = v;
+    this.sendUpdate();
   }
 
   public sendUpdate() {
