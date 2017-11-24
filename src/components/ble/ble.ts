@@ -14,6 +14,7 @@ const DEFAULT_BRIGHTNESS = 128;
 const DEFAULT_DIM_LEVEL = 2;
 const MIN_UPDATE_INTERVAL_MS = 55;
 const FADE_UPDATE_INTERVAL_MS = 60;
+const UO_HSV = [8, 255, 255];
 
 /**
  * BleComponent
@@ -92,6 +93,7 @@ export class BleComponent {
     console.log("BleComponent updateReset()")
     this.cycle = false;
     this.off = true;
+    this.dim = DEFAULT_DIM_LEVEL;
     if (isDefined(this.looperTimeout)) {
       clearTimeout(this.looperTimeout);
       this.looperTimeout = undefined;
@@ -156,6 +158,22 @@ export class BleComponent {
       this.looperTimeout = undefined;
     }
     looper();
+  }
+
+  public uoDecay() {
+    console.log("UO requested");
+    this.dim = 0;
+    this.updateHSV(UO_HSV[0], UO_HSV[1], UO_HSV[2]);
+    this.cycle = true;
+
+    if (isDefined(this.looperTimeout)) {
+      clearTimeout(this.looperTimeout);
+      this.looperTimeout = undefined;
+    }
+
+    this.looperTimeout = setTimeout(() => {
+      this.decayV(UO_HSV, 8000);
+    }, 4000);
   }
 
   public decayV(startHSV:number[], halfLifeMs:number) {
