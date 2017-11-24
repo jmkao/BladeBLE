@@ -102,11 +102,12 @@ export class BleService {
     payload[2] = s;
     payload[3] = v;
 
-    console.log("Calling device with payload: "+payload[0]+", "+payload[1]+", "
-      +payload[2]+", "+payload[3]);
+    //console.log("Calling device with payload: "+payload[0]+", "+payload[1]+", "+payload[2]+", "+payload[3]);
 
     this.ble.write(this.device.id, SERVICE_UUID, TX_UUID, payload.buffer).then(
-      () => console.log('BleService: Write successful'),
+      () => {
+        //console.log('BleService: Write successful')
+      },
       () => {
         console.log('BleService: Error writing to device - resetting.');
         this.init();

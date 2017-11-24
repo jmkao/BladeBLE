@@ -10,7 +10,7 @@ import { BleService } from '../../services/ble-service';
 import { BleModalPage } from '../../pages/ble-modal/ble-modal';
 import { isDefined } from 'ionic-angular/util/util';
 
-const DEFAULT_BRIGHTNESS = 160;
+const DEFAULT_BRIGHTNESS = 128;
 const DEFAULT_DIM_LEVEL = 2;
 const MIN_UPDATE_INTERVAL_MS = 60;
 
@@ -242,7 +242,7 @@ export class BleComponent {
   }
 
   private _updateHSV(h:number, s:number, v:number) {
-    console.log("BleComponent _updateHSV()");
+    //console.log("BleComponent _updateHSV()");
     this.h = h;
     this.s = s;
     this.v = v;
@@ -254,7 +254,7 @@ export class BleComponent {
       return;
     }
     let curMs = new Date().getTime();
-    console.log("sendUpdate() requested at "+curMs);    
+    //console.log("sendUpdate() requested at "+curMs);    
     if (curMs - this.lastUpdateMs > MIN_UPDATE_INTERVAL_MS) {
       // Only update if MIN_UPDATE_INTERVAL_MS has passed since last update
       if (!this.off) {
