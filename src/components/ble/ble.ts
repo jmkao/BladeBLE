@@ -187,6 +187,13 @@ export class BleComponent {
     looper();
   }
 
+  public fadeHS(fromHS:number[], toHS:number[], durationMs:number) {
+    let fromHSV = [fromHS[0], fromHS[1], this.v];
+    let toHSV = [toHS[0], toHS[1], this.v];
+
+    this.fadeHSV(fromHSV, toHSV, durationMs);
+  }
+
   public fadeHSV(fromHSV:number[], toHSV:number[], durationMs:number) {
     this.cycle = true;
     this.off = false;
@@ -208,9 +215,18 @@ export class BleComponent {
       let curMs = new Date().getTime();
       let ratio = (curMs - startMs) / durationMs;
       if (ratio > 1) {
-        this.cycle = false;
-        console.log("Fade completed at "+curMs);
-        return;
+        // reverse the fade
+        ratio = 0;
+        fromHSV[0] = toHSV[0];
+        fromHSV[1] = toHSV[1];
+        fromHSV[2] = toHSV[2];
+        toHSV[0] = fromHSV[0] - dH;
+        toHSV[1] = fromHSV[1] - dS;
+        toHSV[2] = fromHSV[2] - dV;
+        dH = -dH;
+        dS = -dS;
+        dV = -dV;
+        startMs = curMs;
       }
 
       this._updateHSV(fromHSV[0] + ratio*dH, fromHSV[1] + ratio*dS, fromHSV[2] + ratio*dV);

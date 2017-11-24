@@ -32,6 +32,28 @@
                     <button ion-button ion-col color="blue" (click)="ble.fadeHSV([240,255,255], [120,255,255], 4000)">Blue/Green</button>
                     <button ion-button ion-col color="blue" (click)="ble.decayV([30,255,255], 8000)">UO</button>
                 </ion-buttons>
+                <ion-buttons padding-bottom ion-row>
+                </ion-buttons>                        
+            </ion-slide>
+            <ion-slide>
+                <ion-buttons ion-row>
+                    <button (click)="ble.updateHS(0, 255)" ion-button ion-col color="red">Red</button>
+                    <button (click)="ble.updateHS(120, 200)" ion-button ion-col color="green">Miku</button>
+                    <button (click)="ble.updateHS(240, 255)" ion-button ion-col color="blue">Blue</button>
+                </ion-buttons>
+                <ion-buttons ion-row>
+                    <button (click)="ble.updateHS(0, 128)" ion-button ion-col color="pink">Pink</button>
+                    <button (click)="ble.updateHS(60, 255)" ion-button ion-col color="yellow">Yellow</button>
+                    <button (click)="ble.updateHS(110, 255)" ion-button ion-col color="green">Gumi</button>
+                </ion-buttons>
+                <ion-buttons ion-row>
+                    <button (click)="ble.fadeHS([0,128],[90,255], 2000)" ion-button ion-col color="light">Gumi/Pink</button>
+                    <button (click)="ble.fadeHS([120,200],[60,255], 2000)" ion-button ion-col color="light">Green/Yellow</button>
+               </ion-buttons>
+               <ion-buttons ion-row>
+                    <button (click)="ble.fadeHS([60,255],[90,255], 2000)" ion-button ion-col color="light">Gumi/Yellow</button>
+                    <button (click)="ble.fadeHS([120,220],[0,128], 2000)" ion-button ion-col color="light">Pink/Green</button>
+                </ion-buttons>
             </ion-slide>
             <ion-slide ion-grid>
                 <ion-buttons padding-bottom ion-row>
