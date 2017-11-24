@@ -10,7 +10,7 @@ import { BleService } from '../../services/ble-service';
 import { BleModalPage } from '../../pages/ble-modal/ble-modal';
 import { isDefined } from 'ionic-angular/util/util';
 
-const DEFAULT_BRIGHTNESS = 64;
+const DEFAULT_BRIGHTNESS = 160;
 const DEFAULT_DIM_LEVEL = 2;
 const MIN_UPDATE_INTERVAL_MS = 60;
 
@@ -90,10 +90,10 @@ export class BleComponent {
       clearTimeout(this.looperTimeout);
       this.looperTimeout = undefined;
       setTimeout( () => {
-        this._updateHSV(0, 255, 64);
+        this._updateHSV(0, 255, DEFAULT_BRIGHTNESS);
       }, MIN_UPDATE_INTERVAL_MS);
     } else {
-      this._updateHSV(0, 255, 64);      
+      this._updateHSV(0, 255, DEFAULT_BRIGHTNESS);      
     }
   }
 
