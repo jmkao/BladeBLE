@@ -12,7 +12,8 @@ import { isDefined } from 'ionic-angular/util/util';
 
 const DEFAULT_BRIGHTNESS = 128;
 const DEFAULT_DIM_LEVEL = 2;
-const MIN_UPDATE_INTERVAL_MS = 60;
+const MIN_UPDATE_INTERVAL_MS = 55;
+const FADE_UPDATE_INTERVAL_MS = 60;
 
 /**
  * BleComponent
@@ -77,9 +78,14 @@ export class BleComponent {
     if (isDefined(this.looperTimeout)) {
       clearTimeout(this.looperTimeout);
       this.looperTimeout = undefined;
+      console.log("off in the middle of looper, delaying command");
+      this.cycle = false;
+      setTimeout( () => {        
+        this.sendUpdate();
+      }, MIN_UPDATE_INTERVAL_MS*2);
+    } else {
+      this.sendUpdate();
     }
-    
-    this.sendUpdate();
   }
 
   public updateReset() {
@@ -89,9 +95,11 @@ export class BleComponent {
     if (isDefined(this.looperTimeout)) {
       clearTimeout(this.looperTimeout);
       this.looperTimeout = undefined;
+      console.log("reset in the middle of looper, delaying command");      
+      this.cycle = false;
       setTimeout( () => {
         this._updateHSV(0, 255, DEFAULT_BRIGHTNESS);
-      }, MIN_UPDATE_INTERVAL_MS);
+      }, MIN_UPDATE_INTERVAL_MS*2);
     } else {
       this._updateHSV(0, 255, DEFAULT_BRIGHTNESS);      
     }
@@ -99,17 +107,7 @@ export class BleComponent {
 
   public updateHS(h:number, s:number) {
     console.log("BleComponent updateHS()");
-    this.cycle = false;
-    this.off = false;
-    if (isDefined(this.looperTimeout)) {
-      clearTimeout(this.looperTimeout);
-      this.looperTimeout = undefined;
-      setTimeout( () => {
-        this._updateHSV(h, s, this.v);        
-      }, MIN_UPDATE_INTERVAL_MS);
-    } else {
-      this._updateHSV(h, s, this.v);      
-    }
+    this.updateHSV(h, s, this.v);
   }
 
   public updateHSV(h:number, s:number, v:number) {
@@ -121,7 +119,7 @@ export class BleComponent {
       this.looperTimeout = undefined;
       setTimeout( () => {
         this._updateHSV(h, s, v);        
-      }, MIN_UPDATE_INTERVAL_MS);
+      }, MIN_UPDATE_INTERVAL_MS*2);
     } else {
       this._updateHSV(h, s, v);      
     }
@@ -148,6 +146,7 @@ export class BleComponent {
 
         this.looperTimeout = setTimeout(looper, delayMs);
       } else {
+        console.log("cycle terminated");
         //this.updateOff();
       }
     }
@@ -177,7 +176,7 @@ export class BleComponent {
       let ratio = Math.pow(2, -(curMs - startMs)/halfLifeMs);
       this._updateHSV(startHSV[0], startHSV[1], startHSV[2]*ratio);
 
-      this.looperTimeout = setTimeout(looper, MIN_UPDATE_INTERVAL_MS);
+      this.looperTimeout = setTimeout(looper, FADE_UPDATE_INTERVAL_MS);
     }
 
     if (isDefined(this.looperTimeout)) {
@@ -231,7 +230,7 @@ export class BleComponent {
 
       this._updateHSV(fromHSV[0] + ratio*dH, fromHSV[1] + ratio*dS, fromHSV[2] + ratio*dV);
 
-      this.looperTimeout = setTimeout(looper, MIN_UPDATE_INTERVAL_MS);
+      this.looperTimeout = setTimeout(looper, FADE_UPDATE_INTERVAL_MS);
     }
 
     if (isDefined(this.looperTimeout)) {
