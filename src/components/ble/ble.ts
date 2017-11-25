@@ -10,8 +10,8 @@ import { BleService } from '../../services/ble-service';
 import { BleModalPage } from '../../pages/ble-modal/ble-modal';
 import { isDefined } from 'ionic-angular/util/util';
 
-const DEFAULT_BRIGHTNESS = 128;
-const DEFAULT_DIM_LEVEL = 2;
+const DEFAULT_BRIGHTNESS = 120;
+const DEFAULT_DIM_LEVEL = 1;
 const MIN_UPDATE_INTERVAL_MS = 90;
 const FADE_UPDATE_INTERVAL_MS = MIN_UPDATE_INTERVAL_MS+10;
 const UO_HSV = [8, 255, 255];
@@ -161,19 +161,46 @@ export class BleComponent {
   }
 
   public uoDecay() {
-    console.log("UO requested");
-    this.dim = 0;
-    this.updateHSV(UO_HSV[0], UO_HSV[1], UO_HSV[2]);
     this.cycle = true;
+    this.off = false;
+    
+    let startMs = new Date().getTime();
+    console.log("UO requested");
+    
+    let looper = () => {
+      if (this.cycle == false) {
+        console.log("UO terminated");
+        //this.updateOff();
+        return;
+      }
+
+      let curMs = new Date().getTime();
+      let t = (curMs - startMs)/1000;
+
+      const a = -0.0004471;
+      const b = 0.1524;
+      const c = 1.278;
+      const d = 0.1003;
+
+      let coeff = a*t + b + c*Math.pow(2, -d*t);
+
+      if (coeff < 0) {
+        console.log("UO reached 0. Terminating.");
+        return;
+      }
+
+      let ratio = Math.min(1, coeff);
+
+      this._updateHSV(UO_HSV[0], UO_HSV[1], Math.trunc(UO_HSV[2]*ratio));
+
+      this.looperTimeout = setTimeout(looper, FADE_UPDATE_INTERVAL_MS);
+    }
 
     if (isDefined(this.looperTimeout)) {
       clearTimeout(this.looperTimeout);
       this.looperTimeout = undefined;
     }
-
-    this.looperTimeout = setTimeout(() => {
-      this.decayV(UO_HSV, 8000);
-    }, 4000);
+    looper();
   }
 
   public decayV(startHSV:number[], halfLifeMs:number) {
