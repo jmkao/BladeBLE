@@ -34,7 +34,12 @@
                     <button ion-button ion-col color="pink" (click)="ble.updateHS(339, 220)">Pink</button>
                     <button ion-button ion-col color="green" (click)="ble.updateHS(120,200)">Mint</button>
                 </ion-buttons>
-                <ion-buttons padding-bottom ion-row>
+                <ion-buttons ion-row>
+                        <button ion-button ion-col color="orange" (click)="ble.updateHS(30,255)">Orange</button>
+                        <button ion-button ion-col color="blue" (click)="ble.updateHS(240, 200)">Light Blue</button>
+                        <button ion-button ion-col color="cyan" (click)="ble.updateHS(180,200)">Light Cyan</button>
+                    </ion-buttons>
+                    <ion-buttons padding-bottom ion-row>
                     <button ion-button ion-col color="blue" (click)="ble.fadeHS([339,220], [120,200], 3000)">Claris</button>
                 </ion-buttons>
                 <ion-buttons padding-bottom ion-row>
