@@ -144,7 +144,7 @@ export class BleComponent {
         let index = counter%hsArray.length;
         counter++;
         this._updateHSV(hsArray[index][0], hsArray[index][1], this.v);
-        console.log("Cycle loop")
+        //console.log("Cycle loop")
 
         this.looperTimeout = setTimeout(looper, delayMs);
       } else {
@@ -229,6 +229,13 @@ export class BleComponent {
       this.looperTimeout = undefined;
     }
     looper();
+  }
+
+  public fadeOutHS(fromHS:number[], durationMs) {
+    let fromHSV = [fromHS[0], fromHS[1], 255];
+    let toHSV = [fromHS[0], fromHS[1], 16];
+
+    this.fadeHSV(fromHSV, toHSV, durationMs);
   }
 
   public fadeHS(fromHS:number[], toHS:number[], durationMs:number) {

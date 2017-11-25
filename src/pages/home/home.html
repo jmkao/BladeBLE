@@ -40,11 +40,38 @@
                         <button ion-button ion-col color="cyan" (click)="ble.updateHS(180,200)">Light Cyan</button>
                     </ion-buttons>
                     <ion-buttons padding-bottom ion-row>
-                    <button ion-button ion-col color="blue" (click)="ble.fadeHS([339,220], [120,200], 3000)">Claris</button>
+                        <button ion-button ion-col color="blue" (click)="ble.cycleHS([[339,220], [120,200]], 1000)">Claris Flash</button>
                 </ion-buttons>
                 <ion-buttons padding-bottom ion-row>
                 </ion-buttons>                        
             </ion-slide>
+            <ion-slide padding-bottom>
+                    <ion-buttons ion-row>
+                        <button ion-button ion-col color="red" (click)="ble.fadeOutHS([0,255], 3000)">Red</button>
+                        <button ion-button ion-col color="green" (click)="ble.fadeOutHS([120,255], 3000)">Green</button>
+                        <button ion-button ion-col color="blue" (click)="ble.fadeOutHS([240,255], 3000)">Blue</button>
+                    </ion-buttons>
+                    <ion-buttons ion-row>
+                        <button ion-button ion-col color="cyan" (click)="ble.fadeOutHS([180,255], 3000)">Cyan</button>
+                        <button ion-button ion-col color="magenta" (click)="ble.fadeOutHS([300,255], 3000)">Magenta</button>
+                        <button ion-button ion-col color="yellow" (click)="ble.fadeOutHS([60,255], 3000)">Yellow</button>
+                    </ion-buttons>
+                    <ion-buttons ion-row>
+                        <button ion-button ion-col outline (click)="ble.fadeOutHS([320,32], 3000)">White</button>
+                        <button ion-button ion-col color="pink" (click)="ble.fadeOutHS([339, 220], 3000)">Pink</button>
+                        <button ion-button ion-col color="green" (click)="ble.fadeOutHS([120,200], 3000)">Mint</button>
+                    </ion-buttons>
+                    <ion-buttons ion-row>
+                            <button ion-button ion-col color="orange" (click)="ble.fadeOutHS([30,255], 3000)">Orange</button>
+                            <button ion-button ion-col color="blue" (click)="ble.fadeOutHS([240, 200], 3000)">Light Blue</button>
+                            <button ion-button ion-col color="cyan" (click)="ble.fadeOutHS([180,200], 3000)">Light Cyan</button>
+                        </ion-buttons>
+                        <ion-buttons padding-bottom ion-row>
+                            <button ion-button ion-col color="blue" (click)="ble.fadeHS([339,220], [120,200], 3000)">Claris Fade</button>
+                        </ion-buttons>
+                    <ion-buttons padding-bottom ion-row>
+                    </ion-buttons>                        
+                </ion-slide>
             <ion-slide>
                 <ion-buttons ion-row>
                     <button (click)="ble.updateHS(0, 255)" ion-button ion-col color="red">Red</button>
@@ -80,10 +107,10 @@
         </ion-range>
         
         <ion-buttons ion-row>
-            <button ion-button ion-col (click)="ble.updateDim(0)">No Dim</button>
-            <button ion-button ion-col (click)="ble.updateDim(1)">Dim 1</button>
-            <button ion-button ion-col (click)="ble.updateDim(2)">Dim 2</button>
-            <button ion-button ion-col (click)="ble.updateDim(3)">Dim 3</button>
+            <button ion-button ion-col (click)="ble.updateDim(0)">Overdrive</button>
+            <button ion-button ion-col (click)="ble.updateDim(1)">Normal</button>
+            <button ion-button ion-col (click)="ble.updateDim(2)">Dim</button>
+            <button ion-button ion-col (click)="ble.updateDim(3)">Minimum</button>
         </ion-buttons>
     </ion-grid>
 </ion-content>
