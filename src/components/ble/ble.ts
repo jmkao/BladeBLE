@@ -12,8 +12,8 @@ import { isDefined } from 'ionic-angular/util/util';
 
 const DEFAULT_BRIGHTNESS = 128;
 const DEFAULT_DIM_LEVEL = 2;
-const MIN_UPDATE_INTERVAL_MS = 55;
-const FADE_UPDATE_INTERVAL_MS = 60;
+const MIN_UPDATE_INTERVAL_MS = 90;
+const FADE_UPDATE_INTERVAL_MS = MIN_UPDATE_INTERVAL_MS+10;
 const UO_HSV = [8, 255, 255];
 
 /**
@@ -83,7 +83,7 @@ export class BleComponent {
       this.cycle = false;
       setTimeout( () => {        
         this.sendUpdate();
-      }, MIN_UPDATE_INTERVAL_MS*2);
+      }, MIN_UPDATE_INTERVAL_MS*1.2);
     } else {
       this.sendUpdate();
     }
@@ -101,7 +101,7 @@ export class BleComponent {
       this.cycle = false;
       setTimeout( () => {
         this._updateHSV(0, 255, DEFAULT_BRIGHTNESS);
-      }, MIN_UPDATE_INTERVAL_MS*2);
+      }, MIN_UPDATE_INTERVAL_MS*1.2);
     } else {
       this._updateHSV(0, 255, DEFAULT_BRIGHTNESS);      
     }
@@ -121,7 +121,7 @@ export class BleComponent {
       this.looperTimeout = undefined;
       setTimeout( () => {
         this._updateHSV(h, s, v);        
-      }, MIN_UPDATE_INTERVAL_MS*2);
+      }, MIN_UPDATE_INTERVAL_MS*1.2);
     } else {
       this._updateHSV(h, s, v);      
     }
