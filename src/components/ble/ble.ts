@@ -160,6 +160,28 @@ export class BleComponent {
     looper();
   }
 
+  public cycleFadeHS(hsArray:number[][], durationMs:number) {
+    this.cycle = true;
+    this.off=false;
+    console.log("Cycle fade on");
+
+    let counter = 0;
+
+    let sequenceCallback = () => {
+      if (this.cycle == true) {
+        let index = counter%hsArray.length;
+        counter++;
+        let nextIndex = counter%hsArray.length;
+        this.fadeHSV([hsArray[index][0], hsArray[index][1], this.v], [hsArray[nextIndex][0], hsArray[nextIndex][1], this.v], durationMs, sequenceCallback);
+      } else {
+        console.log("Cycle fade terminated");
+        return;
+      }
+    }
+
+    sequenceCallback();
+  }
+
   public uoDecay() {
     this.cycle = true;
     this.off = false;
@@ -245,9 +267,29 @@ export class BleComponent {
     this.fadeHSV(fromHSV, toHSV, durationMs);
   }
 
-  public fadeHSV(fromHSV:number[], toHSV:number[], durationMs:number) {
+  public fadeHSV(fromHSV:number[], toHSV:number[], durationMs:number, callback?:()=>void) {
     this.cycle = true;
     this.off = false;
+
+    if (fromHSV[0] == 360) {
+      if (toHSV[0] < 180) {
+        fromHSV[0] = 0;
+      }
+    } else if (fromHSV[0] == 0) {
+      if (toHSV[0] >= 180) {
+        fromHSV[0] = 360;
+      }
+    }
+
+    if (toHSV[0] == 360) {
+      if (fromHSV[0] < 180) {
+        toHSV[0] = 0;
+      }
+    } else if (toHSV[0] == 0) {
+      if (fromHSV[0] >= 180) {
+        toHSV[0] = 360;
+      }
+    }
     
     let startMs = new Date().getTime();
     let dH = toHSV[0] - fromHSV[0];
@@ -266,18 +308,23 @@ export class BleComponent {
       let curMs = new Date().getTime();
       let ratio = (curMs - startMs) / durationMs;
       if (ratio > 1) {
-        // reverse the fade
-        ratio = 0;
-        fromHSV[0] = toHSV[0];
-        fromHSV[1] = toHSV[1];
-        fromHSV[2] = toHSV[2];
-        toHSV[0] = fromHSV[0] - dH;
-        toHSV[1] = fromHSV[1] - dS;
-        toHSV[2] = fromHSV[2] - dV;
-        dH = -dH;
-        dS = -dS;
-        dV = -dV;
-        startMs = curMs;
+        if (isDefined(callback)) {
+          callback();
+          return;
+        } else {
+          // reverse the fade
+          ratio = 0;
+          fromHSV[0] = toHSV[0];
+          fromHSV[1] = toHSV[1];
+          fromHSV[2] = toHSV[2];
+          toHSV[0] = fromHSV[0] - dH;
+          toHSV[1] = fromHSV[1] - dS;
+          toHSV[2] = fromHSV[2] - dV;
+          dH = -dH;
+          dS = -dS;
+          dV = -dV;
+          startMs = curMs;
+        }
       }
 
       this._updateHSV(fromHSV[0] + ratio*dH, fromHSV[1] + ratio*dS, fromHSV[2] + ratio*dV);

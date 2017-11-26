@@ -20,83 +20,98 @@
         <ion-slides pager>
             <ion-slide padding-bottom>
                 <ion-buttons ion-row>
-                    <button ion-button ion-col color="red" (click)="ble.updateHS(0,255)">Red</button>
-                    <button ion-button ion-col color="green" (click)="ble.updateHS(120,255)">Green</button>
-                    <button ion-button ion-col color="blue" (click)="ble.updateHS(240,255)">Blue</button>
+                    <button ion-button ion-col large color="red" (click)="ble.updateHS(0,255)">Red</button>
+                    <button ion-button ion-col large color="green" (click)="ble.updateHS(120,255)">Green</button>
+                    <button ion-button ion-col large color="blue" (click)="ble.updateHS(240,255)">Blue</button>
                 </ion-buttons>
                 <ion-buttons ion-row>
-                    <button ion-button ion-col color="cyan" (click)="ble.updateHS(180,255)">Cyan</button>
-                    <button ion-button ion-col color="magenta" (click)="ble.updateHS(300,255)">Magenta</button>
-                    <button ion-button ion-col color="yellow" (click)="ble.updateHS(60,255)">Yellow</button>
+                    <button ion-button ion-col large color="cyan" (click)="ble.updateHS(180,255)">Cyan</button>
+                    <button ion-button ion-col large color="magenta" (click)="ble.updateHS(300,255)">Magenta</button>
+                    <button ion-button ion-col large color="yellow" (click)="ble.updateHS(60,255)">Yellow</button>
                 </ion-buttons>
                 <ion-buttons ion-row>
-                    <button ion-button ion-col outline (click)="ble.updateHS(320,32)">White</button>
-                    <button ion-button ion-col color="pink" (click)="ble.updateHS(339, 220)">Pink</button>
-                    <button ion-button ion-col color="green" (click)="ble.updateHS(120,200)">Mint</button>
+                    <button ion-button ion-col large outline (click)="ble.updateHS(320,32)">White</button>
+                    <button ion-button ion-col large color="pink" (click)="ble.updateHS(339, 220)">Pink</button>
+                    <button ion-button ion-col large color="green" (click)="ble.updateHS(120,200)">Mint</button>
                 </ion-buttons>
                 <ion-buttons ion-row>
-                        <button ion-button ion-col color="orange" (click)="ble.updateHS(15,255)">Orange</button>
-                        <button ion-button ion-col color="blue" (click)="ble.updateHS(240, 200)">Light Blue</button>
-                        <button ion-button ion-col color="cyan" (click)="ble.updateHS(180,200)">Light Cyan</button>
+                        <button ion-button ion-col large color="orange" (click)="ble.updateHS(15,255)">Orange</button>
+                        <button ion-button ion-col large color="blue" (click)="ble.updateHS(240, 200)">Light Blue</button>
+                        <button ion-button ion-col large color="cyan" (click)="ble.updateHS(270,200)">Purple</button>
                     </ion-buttons>
                     <ion-buttons padding-bottom ion-row>
-                        <button ion-button ion-col color="blue" (click)="ble.cycleHS([[339,220], [120,200]], 1000)">Claris Flash</button>
+                        <button ion-button ion-col large color="blue" (click)="ble.cycleHS([[339,220], [120,200]], 1000)">Claris Flash</button>
                 </ion-buttons>
                 <ion-buttons padding-bottom ion-row>
                 </ion-buttons>                        
             </ion-slide>
             <ion-slide padding-bottom>
                     <ion-buttons ion-row>
-                        <button ion-button ion-col color="red" (click)="ble.fadeOutHS([0,255], 3000)">Red</button>
-                        <button ion-button ion-col color="green" (click)="ble.fadeOutHS([120,255], 3000)">Green</button>
-                        <button ion-button ion-col color="blue" (click)="ble.fadeOutHS([240,255], 3000)">Blue</button>
+                        <button ion-button ion-col large color="red" (click)="ble.fadeOutHS([0,255], 3000)">Red</button>
+                        <button ion-button ion-col large color="green" (click)="ble.fadeOutHS([120,255], 3000)">Green</button>
+                        <button ion-button ion-col large color="blue" (click)="ble.fadeOutHS([240,255], 3000)">Blue</button>
                     </ion-buttons>
                     <ion-buttons ion-row>
-                        <button ion-button ion-col color="cyan" (click)="ble.fadeOutHS([180,255], 3000)">Cyan</button>
-                        <button ion-button ion-col color="magenta" (click)="ble.fadeOutHS([300,255], 3000)">Magenta</button>
-                        <button ion-button ion-col color="yellow" (click)="ble.fadeOutHS([60,255], 3000)">Yellow</button>
+                        <button ion-button ion-col large color="cyan" (click)="ble.fadeOutHS([180,255], 3000)">Cyan</button>
+                        <button ion-button ion-col large color="magenta" (click)="ble.fadeOutHS([300,255], 3000)">Magenta</button>
+                        <button ion-button ion-col large color="yellow" (click)="ble.fadeOutHS([60,255], 3000)">Yellow</button>
                     </ion-buttons>
                     <ion-buttons ion-row>
-                        <button ion-button ion-col outline (click)="ble.fadeOutHS([320,32], 3000)">White</button>
-                        <button ion-button ion-col color="pink" (click)="ble.fadeOutHS([339, 220], 3000)">Pink</button>
-                        <button ion-button ion-col color="green" (click)="ble.fadeOutHS([120,200], 3000)">Mint</button>
+                        <button ion-button ion-col large outline (click)="ble.fadeOutHS([320,32], 3000)">White</button>
+                        <button ion-button ion-col large color="pink" (click)="ble.fadeOutHS([339, 220], 3000)">Pink</button>
+                        <button ion-button ion-col large color="green" (click)="ble.fadeOutHS([120,200], 3000)">Mint</button>
                     </ion-buttons>
                     <ion-buttons ion-row>
-                            <button ion-button ion-col color="orange" (click)="ble.fadeOutHS([15,255], 3000)">Orange</button>
-                            <button ion-button ion-col color="blue" (click)="ble.fadeOutHS([240, 200], 3000)">Light Blue</button>
-                            <button ion-button ion-col color="cyan" (click)="ble.fadeOutHS([180,200], 3000)">Light Cyan</button>
-                        </ion-buttons>
-                        <ion-buttons padding-bottom ion-row>
-                            <button ion-button ion-col color="blue" (click)="ble.fadeHS([339,220], [120,200], 3000)">Claris Fade</button>
-                        </ion-buttons>
+                        <button ion-button ion-col large color="orange" (click)="ble.fadeOutHS([15,255], 3000)">Orange</button>
+                        <button ion-button ion-col large color="blue" (click)="ble.fadeOutHS([240, 200], 3000)">Light Blue</button>
+                        <button ion-button ion-col large color="cyan" (click)="ble.fadeOutHS([270,200], 3000)">Purple</button>
+                    </ion-buttons>
+                    <ion-buttons padding-bottom ion-row>
+                        <button ion-button ion-col large color="blue" (click)="ble.fadeHS([339,220], [120,200], 3000)">Claris Fade</button>
+                    </ion-buttons>
                     <ion-buttons padding-bottom ion-row>
                     </ion-buttons>                        
+            </ion-slide>
+            <ion-slide ion-grid>
+                <ion-buttons ion-row>
+                    <button ion-button ion-col large color="red" (click)="ble.updateHS(360,255)">Red</button>
+                    <button ion-button ion-col large color="yellow" (click)="ble.updateHS(60,255)">Yellow</button>
+                    <button ion-button ion-col large color="cyan" (click)="ble.updateHS(270,200)">Purple</button>
+                </ion-buttons>
+                <ion-buttons ion-row>
+                    <button ion-button ion-col large color="pink" (click)="ble.updateHS(339, 220)">Pink</button>
+                    <button ion-button ion-col large color="blue" (click)="ble.updateHS(240, 200)">Light Blue</button>
+                </ion-buttons>
+                <ion-buttons ion-row>
+                        <button ion-button ion-col large color="dark" outline (click)="ble.cycleFadeHS([[360,255],[60,255],[240,200],[339,220],[270,200]], 2000)">Luce Twinkle Wink Fade</button>
+                </ion-buttons>
+                <ion-buttons ion-row padding-bottom>
+                        <button ion-button ion-col large color="dark" outline (click)="ble.cycleHS([[360,255],[240,200],[339,220],[60,255],[270,200]], 400)">Luce Twinkle Wink Flash</button>
+                </ion-buttons>
+                <ion-buttons padding-bottom ion-row>
+                    <button ion-button ion-col color="light" large (click)="ble.cycleHS([[0,255],[240,100],[60,255],[240,255],[260,192],[120,255],[30,255]], 200)">
+                    WUG 
+                </button>
+                </ion-buttons>
                 </ion-slide>
             <ion-slide>
                 <ion-buttons ion-row>
-                    <button (click)="ble.updateHS(0, 255)" ion-button ion-col color="red">Red</button>
-                    <button (click)="ble.updateHS(120, 200)" ion-button ion-col color="green">Miku</button>
-                    <button (click)="ble.updateHS(240, 255)" ion-button ion-col color="blue">Blue</button>
+                    <button (click)="ble.updateHS(0, 255)" ion-button ion-col large color="red">Red</button>
+                    <button (click)="ble.updateHS(120, 200)" ion-button ion-col large color="green">Miku</button>
+                    <button (click)="ble.updateHS(240, 255)" ion-button ion-col large color="blue">Blue</button>
                 </ion-buttons>
                 <ion-buttons ion-row>
-                    <button (click)="ble.updateHS(0, 128)" ion-button ion-col color="pink">Pink</button>
-                    <button (click)="ble.updateHS(60, 255)" ion-button ion-col color="yellow">Yellow</button>
-                    <button (click)="ble.updateHS(110, 255)" ion-button ion-col color="green">Gumi</button>
+                    <button (click)="ble.updateHS(0, 128)" ion-button ion-col large color="pink">Pink</button>
+                    <button (click)="ble.updateHS(60, 255)" ion-button ion-col large color="yellow">Yellow</button>
+                    <button (click)="ble.updateHS(110, 255)" ion-button ion-col large color="green">Gumi</button>
                 </ion-buttons>
                 <ion-buttons ion-row>
-                    <button (click)="ble.fadeHS([0,128],[90,255], 2000)" ion-button ion-col outline>Gumi/Pink</button>
-                    <button (click)="ble.fadeHS([120,200],[60,255], 2000)" ion-button ion-col outline>Green/Yellow</button>
+                    <button (click)="ble.fadeHS([0,128],[90,255], 2000)" ion-button ion-col large outline>Gumi/Pink</button>
+                    <button (click)="ble.fadeHS([120,200],[60,255], 2000)" ion-button ion-col large outline>Green/Yellow</button>
                </ion-buttons>
                <ion-buttons ion-row>
-                    <button (click)="ble.fadeHS([60,255],[90,255], 2000)" ion-button ion-col color="light">Gumi/Yellow</button>
-                    <button (click)="ble.fadeHS([120,220],[0,128], 2000)" ion-button ion-col color="light">Pink/Green</button>
-                </ion-buttons>
-            </ion-slide>
-            <ion-slide ion-grid>
-                <ion-buttons padding-bottom ion-row>
-                    <button ion-button ion-col color="light" (click)="ble.cycleHS([[0,255],[240,100],[60,255],[240,255],[260,192],[120,255],[30,255]], 200)">
-                    WUG 
-                </button>
+                    <button (click)="ble.fadeHS([60,255],[90,255], 2000)" ion-button ion-col large color="light">Gumi/Yellow</button>
+                    <button (click)="ble.fadeHS([120,220],[0,128], 2000)" ion-button ion-col clarge olor="light">Pink/Green</button>
                 </ion-buttons>
             </ion-slide>
         </ion-slides>
