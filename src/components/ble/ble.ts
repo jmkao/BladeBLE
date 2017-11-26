@@ -14,7 +14,7 @@ const DEFAULT_BRIGHTNESS = 120;
 const DEFAULT_DIM_LEVEL = 1;
 const MIN_UPDATE_INTERVAL_MS = 90;
 const FADE_UPDATE_INTERVAL_MS = MIN_UPDATE_INTERVAL_MS+10;
-const UO_HSV = [15, 255, 255];
+const UO_HSV = [30, 255, 255];
 
 /**
  * BleComponent
